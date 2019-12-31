@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.tigermouthbear.clantags.ClanScreen;
 import com.tigermouthbear.clantags.Globals;
 import com.tigermouthbear.clantags.data.Clan;
-import com.tigermouthbear.clantags.utils.ChatUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -58,8 +57,8 @@ public class InfoCommand implements ICommand, Globals
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] argString)
 	{
+		mc.displayGuiScreen(null);
 		setGuiToOpen(Clan.getClan(argString[0]));
-		ChatUtils.printmessage(Clan.getClan(argString[0]).getFullName());
 	}
 
 	@Override

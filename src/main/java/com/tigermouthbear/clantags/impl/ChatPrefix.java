@@ -1,7 +1,7 @@
 package com.tigermouthbear.clantags.impl;
 
 import com.tigermouthbear.clantags.data.ClanMember;
-import com.tigermouthbear.clantags.utils.ChatUtils;
+import com.tigermouthbear.clantags.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,6 +25,6 @@ public class ChatPrefix
 		String username = event.getMessage().getUnformattedText().split("<")[1].split(">")[0];
 		ClanMember clanMember = ClanMember.getClanMemberByUsername(username);
 
-		if(clanMember != null) event.setMessage(ChatUtils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+		if(clanMember != null) event.setMessage(Utils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
 	}
 }
