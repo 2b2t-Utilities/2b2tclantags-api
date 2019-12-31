@@ -1,8 +1,7 @@
 package com.tigermouthbear.clantags.api;
 
-import com.tigermouthbear.clantags.Clan;
-import com.tigermouthbear.clantags.ClanMember;
-import org.json.JSONArray;
+import com.tigermouthbear.clantags.data.Clan;
+import com.tigermouthbear.clantags.data.ClanMember;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -10,14 +9,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.Arrays;
 
 /***
  * @author Tigermouthbear
  * 12/3/19
  */
 
-public class WebApi
+public class ClanTagsApi
 {
 	private static final String CLAN_DATABASE = "https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases.txt";
 
@@ -64,7 +63,7 @@ public class WebApi
 		{
 			clan.addMember(getMember(name));
 
-			for(UUID uuid: parseUUIDS(members.get(name).toString()))
+			for(String uuid: parseUUIDS(members.get(name).toString()))
 			{
 				getMember(name).addUuid(uuid);
 			}
@@ -82,15 +81,10 @@ public class WebApi
 		return new ClanMember(name);
 	}
 
-	private static ArrayList<UUID> parseUUIDS(String value)
+	private static ArrayList<String> parseUUIDS(String value)
 	{
 		String[] uuids = value.split(", ");
-		ArrayList<UUID> temp = new ArrayList<>();
-		for(String uuid: uuids)
-		{
-			temp.add(UUID.fromString(uuid));
-		}
-		return temp;
+		return new ArrayList<>(Arrays.asList(uuids));
 	}
 
 }

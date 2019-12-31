@@ -1,6 +1,8 @@
 package com.tigermouthbear.clantags;
 
-import com.tigermouthbear.clantags.api.WebApi;
+import com.tigermouthbear.clantags.api.ClanTagsApi;
+import com.tigermouthbear.clantags.data.Clan;
+import com.tigermouthbear.clantags.impl.ChatPrefix;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -11,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
  * 12/30/19
  */
 
-@Mod(modid = ClanTags.MODID, name = ClanTags.NAME, version = ClanTags.VERSION)
+@Mod(modid = ClanTags.MODID, name = ClanTags.NAME, version = ClanTags.VERSION, clientSideOnly = true)
 public class ClanTags
 {
     public static final String MODID = "2b2tclantags";
@@ -21,7 +23,7 @@ public class ClanTags
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        WebApi.loadClans();
-        FMLLog.log.info(Clan.getAllClans().get(0).getFullName());
+        ClanTagsApi.loadClans();
+        new ChatPrefix();
     }
 }

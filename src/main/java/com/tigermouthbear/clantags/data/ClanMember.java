@@ -1,6 +1,4 @@
-package com.tigermouthbear.clantags;
-
-import com.tigermouthbear.clantags.api.MojangApi;
+package com.tigermouthbear.clantags.data;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -15,7 +13,7 @@ public class ClanMember
 	private static ArrayList<ClanMember> allClanMembers = new ArrayList<>();
 
 	private ArrayList<Clan> clans = new ArrayList<>();
-	private ArrayList<UUID> uuids;
+	private ArrayList<String> uuids = new ArrayList<>();
 	private String name;
 
 	public ClanMember(String name)
@@ -29,12 +27,12 @@ public class ClanMember
 		return clans;
 	}
 
-	public void addUuid(UUID uuid)
+	public void addUuid(String uuid)
 	{
 		uuids.add(uuid);
 	}
 
-	public ArrayList<UUID> getUuids()
+	public ArrayList<String> getUuids()
 	{
 		return uuids;
 	}
@@ -47,5 +45,31 @@ public class ClanMember
 	public static ArrayList<ClanMember> getAllClanMembers()
 	{
 		return allClanMembers;
+	}
+
+	public static ClanMember getClanMemberByName(String name)
+	{
+		for(ClanMember member: allClanMembers)
+		{
+			if(member.name.equalsIgnoreCase(name))
+			{
+				return member;
+			}
+		}
+
+		return null;
+	}
+
+	public static ClanMember getClanMemberByUuid(String uuid)
+	{
+		for(ClanMember member: allClanMembers)
+		{
+			if(member.uuids.contains(uuid))
+			{
+				return member;
+			}
+		}
+
+		return null;
 	}
 }

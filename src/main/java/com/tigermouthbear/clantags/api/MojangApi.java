@@ -4,9 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.UUID;
 
 /***
  * @author Tigermouthbear
@@ -15,18 +15,33 @@ import java.util.UUID;
 
 public class MojangApi
 {
-	public static UUID getUuid(String name) throws Exception
+	public static String getUuid(String name)
 	{
-		URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-		JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
-		return UUID.fromString(jsonObject.get("id").toString());
+		try
+		{
+			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
+			JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
+			return jsonObject.get("id").toString();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	public static String getUsername(String uuid) throws Exception
+	public static String getUsername(String uuid)
 	{
-		URL url = new URL("https://api.mojang.com/user/profiles/" + uuid.replace("-", "") + "/names");
-		JSONArray jsonArray = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
-		JSONObject nameObject = (JSONObject) jsonArray.get(jsonArray.length()-1);
-		return nameObject.get("name").toString();
+		try
+		{
+			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
+			JSONArray jsonObject = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
+			return ((JSONObject)jsonObject.get(0)).get("name").toString();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

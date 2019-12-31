@@ -1,4 +1,4 @@
-package com.tigermouthbear.clantags;
+package com.tigermouthbear.clantags.data;
 
 import java.util.ArrayList;
 
