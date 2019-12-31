@@ -15,12 +15,14 @@ public class Clan
 	private String abbreviation;
 	private String fullName;
 	private String description;
+	private String color;
 
-	public Clan(String abbreviation, String fullName, String description)
+	public Clan(String abbreviation, String fullName, String description, String color)
 	{
 		this.abbreviation = abbreviation;
 		this.fullName = fullName;
 		this.description = description;
+		this.color = color;
 
 		clans.add(this);
 	}
@@ -51,8 +53,23 @@ public class Clan
 		return description;
 	}
 
+	public String getColor()
+	{
+		return color;
+	}
+
 	public static ArrayList<Clan> getAllClans()
 	{
 		return clans;
+	}
+
+	public static Clan getClan(String nameOrAbbreviation)
+	{
+		for(Clan clan: clans)
+		{
+			if(clan.abbreviation.equalsIgnoreCase(nameOrAbbreviation) || clan.fullName.equalsIgnoreCase(nameOrAbbreviation)) return clan;
+		}
+
+		return null;
 	}
 }

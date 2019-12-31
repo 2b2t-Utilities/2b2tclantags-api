@@ -65,7 +65,7 @@ public class ClanTagsApi
 
 			for(String uuid: parseUUIDS(members.get(name).toString()))
 			{
-				getMember(name).addUuid(uuid);
+				getMember(name).addUser(uuid);
 			}
 		}
 

@@ -1,6 +1,10 @@
 package com.tigermouthbear.clantags.data;
 
+import com.tigermouthbear.clantags.api.MojangApi;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /***
@@ -13,7 +17,7 @@ public class ClanMember
 	private static ArrayList<ClanMember> allClanMembers = new ArrayList<>();
 
 	private ArrayList<Clan> clans = new ArrayList<>();
-	private ArrayList<String> uuids = new ArrayList<>();
+	private Map<String, String> users = new HashMap<>();
 	private String name;
 
 	public ClanMember(String name)
@@ -27,14 +31,14 @@ public class ClanMember
 		return clans;
 	}
 
-	public void addUuid(String uuid)
+	public void addUser(String uuid)
 	{
-		uuids.add(uuid);
+		users.put(MojangApi.getUsername(uuid), uuid);
 	}
 
-	public ArrayList<String> getUuids()
+	public Map<String, String> getUsers()
 	{
-		return uuids;
+		return users;
 	}
 
 	public String name()
@@ -47,11 +51,11 @@ public class ClanMember
 		return allClanMembers;
 	}
 
-	public static ClanMember getClanMemberByName(String name)
+	public static ClanMember getClanMemberByUsername(String name)
 	{
 		for(ClanMember member: allClanMembers)
 		{
-			if(member.name.equalsIgnoreCase(name))
+			if(member.users.keySet().contains(name))
 			{
 				return member;
 			}
@@ -64,7 +68,7 @@ public class ClanMember
 	{
 		for(ClanMember member: allClanMembers)
 		{
-			if(member.uuids.contains(uuid))
+			if(member.users.values().contains(uuid))
 			{
 				return member;
 			}
