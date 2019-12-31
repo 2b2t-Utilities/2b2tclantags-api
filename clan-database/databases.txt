@@ -1,1 +1,2 @@
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/DEV.json
+https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/JEW.json

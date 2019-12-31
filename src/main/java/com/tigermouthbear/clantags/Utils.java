@@ -5,6 +5,8 @@ import com.tigermouthbear.clantags.data.ClanMember;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +48,18 @@ public class Utils
 		return component;
 	}
 
-
+	public static void openLink(String link)
+	{
+		try
+		{
+			URI uri = new URI(link);
+			Class<?> oclass = Class.forName("java.awt.Desktop");
+			Object object = oclass.getMethod("getDesktop").invoke(null);
+			oclass.getMethod("browse", URI.class).invoke(object, uri);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

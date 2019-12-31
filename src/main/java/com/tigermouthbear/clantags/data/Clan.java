@@ -16,13 +16,18 @@ public class Clan
 	private String fullName;
 	private String description;
 	private String color;
+	private String discord;
 
-	public Clan(String abbreviation, String fullName, String description, String color)
+	public String allies = "NONE";
+	public String enemies = "NONE";
+
+	public Clan(String abbreviation, String fullName, String description, String color, String discord)
 	{
 		this.abbreviation = abbreviation;
 		this.fullName = fullName;
 		this.description = description;
 		this.color = color;
+		this.discord = discord;
 
 		clans.add(this);
 	}
@@ -56,6 +61,11 @@ public class Clan
 	public String getColor()
 	{
 		return color;
+	}
+
+	public String getDiscord()
+	{
+		return discord;
 	}
 
 	public static ArrayList<Clan> getAllClans()

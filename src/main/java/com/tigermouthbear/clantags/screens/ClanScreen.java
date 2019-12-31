@@ -1,8 +1,14 @@
-package com.tigermouthbear.clantags;
+package com.tigermouthbear.clantags.screens;
 
+import com.tigermouthbear.clantags.Utils;
 import com.tigermouthbear.clantags.data.Clan;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /***
  * @author Tigermouthbear
@@ -19,6 +25,14 @@ public class ClanScreen extends GuiScreen
 	}
 
 	@Override
+	public void initGui()
+	{
+		this.initGui();
+
+		buttonList.add(new DiscordButton(0, 0, clan.getDiscord()));
+	}
+
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		drawDefaultBackground();
@@ -32,6 +46,14 @@ public class ClanScreen extends GuiScreen
 		GlStateManager.scale(scale, scale, 1);
 		drawCenteredString(mc.fontRenderer, text, (int)(x/scale), (int)(y/scale), Integer.parseInt(color, 16));
 		GlStateManager.popMatrix();
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException
+	{
+		if(button instanceof DiscordButton) Utils.openLink("https://discord.gg/" + button.id);
+
+		super.actionPerformed(button);
 	}
 
 	@Override

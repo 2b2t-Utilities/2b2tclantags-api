@@ -55,10 +55,21 @@ public class ClanTagsApi
 	private static void loadDatabase(URL url) throws Exception
 	{
 		JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
-		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString());
+		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString(), jsonObject.get("discord").toString());
 
+		//Load enemies and allies
+		if(jsonObject.get("allies") != null)
+		{
+			clan.allies = jsonObject.get("allies").toString();
+		}
+
+		if(jsonObject.get("enemies") != null)
+		{
+			clan.enemies = jsonObject.get("enemies").toString();
+		}
+
+		//Load members
 		JSONObject members = (JSONObject) jsonObject.get("members");
-
 		for(String name: members.keySet())
 		{
 			clan.addMember(getMember(name));

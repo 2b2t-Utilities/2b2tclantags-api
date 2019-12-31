@@ -21,10 +21,22 @@ public class ChatPrefix
 	@SubscribeEvent()
 	public void onChatMessage(ClientChatReceivedEvent event)
 	{
-		if(!event.getMessage().getUnformattedText().startsWith("<")) return;
-		String username = event.getMessage().getUnformattedText().split("<")[1].split(">")[0];
-		ClanMember clanMember = ClanMember.getClanMemberByUsername(username);
+		//regular message
+		if(event.getMessage().getUnformattedText().startsWith("<"))
+		{
+			String username = event.getMessage().getUnformattedText().split("<")[1].split(">")[0];
+			ClanMember clanMember = ClanMember.getClanMemberByUsername(username);
 
-		if(clanMember != null) event.setMessage(Utils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+			if(clanMember != null) event.setMessage(Utils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+		}
+
+		//whispers
+		if(event.getMessage().getUnformattedText().split(" ")[1].startsWith("whispers: "))
+		{
+			String username = event.getMessage().getUnformattedText().split(" ")[0];
+			ClanMember clanMember = ClanMember.getClanMemberByUsername(username);
+
+			if(clanMember != null) event.setMessage(Utils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+		}
 	}
 }
