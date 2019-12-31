@@ -4,10 +4,14 @@ import com.google.common.collect.Lists;
 import com.tigermouthbear.clantags.ClanScreen;
 import com.tigermouthbear.clantags.Globals;
 import com.tigermouthbear.clantags.data.Clan;
+import com.tigermouthbear.clantags.utils.ChatUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
 
@@ -18,6 +22,13 @@ import java.util.List;
 
 public class InfoCommand implements ICommand, Globals
 {
+	private Clan clanToOpen = null;
+
+	public InfoCommand()
+	{
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
 	@Override
 	public int compareTo(ICommand arg0)
 	{
@@ -47,7 +58,8 @@ public class InfoCommand implements ICommand, Globals
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] argString)
 	{
-		mc.displayGuiScreen(new ClanScreen(Clan.getClan(argString[0])));
+		setGuiToOpen(Clan.getClan(argString[0]));
+		ChatUtils.printmessage(Clan.getClan(argString[0]).getFullName());
 	}
 
 	@Override
@@ -66,5 +78,20 @@ public class InfoCommand implements ICommand, Globals
 	public boolean isUsernameIndex(String[] args, int index)
 	{
 		return false;
+	}
+
+	@SubscribeEvent
+	public void renderTickEvent(TickEvent.RenderTickEvent event)
+	{
+		if(mc.currentScreen == null && clanToOpen != null)
+		{
+			mc.displayGuiScreen(new ClanScreen(clanToOpen));
+			clanToOpen = null;
+		}
+	}
+
+	private void setGuiToOpen(Clan clan)
+	{
+		clanToOpen = clan;
 	}
 }

@@ -1,9 +1,9 @@
 package com.tigermouthbear.clantags;
 
 import com.tigermouthbear.clantags.api.ClanTagsApi;
-import com.tigermouthbear.clantags.data.Clan;
+import com.tigermouthbear.clantags.command.InfoCommand;
 import com.tigermouthbear.clantags.impl.ChatPrefix;
-import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -25,5 +25,6 @@ public class ClanTags
     {
         ClanTagsApi.loadClans();
         new ChatPrefix();
+        ClientCommandHandler.instance.registerCommand(new InfoCommand());
     }
 }

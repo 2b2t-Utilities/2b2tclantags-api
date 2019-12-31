@@ -1,15 +1,15 @@
 package com.tigermouthbear.clantags.impl;
 
-import com.tigermouthbear.clantags.data.Clan;
 import com.tigermouthbear.clantags.data.ClanMember;
 import com.tigermouthbear.clantags.utils.ChatUtils;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.awt.*;
+/***
+ * @author Tigermouthbear
+ * 12/30/19
+ */
 
 public class ChatPrefix
 {
@@ -21,18 +21,10 @@ public class ChatPrefix
 	@SubscribeEvent()
 	public void onChatMessage(ClientChatReceivedEvent event)
 	{
+		if(!event.getMessage().getUnformattedText().startsWith("<")) return;
 		String username = event.getMessage().getUnformattedText().split("<")[1].split(">")[0];
 		ClanMember clanMember = ClanMember.getClanMemberByUsername(username);
 
-		if(clanMember != null)
-		{
-			ITextComponent tags = ITextComponent.Serializer.jsonToComponent("");
-			for(Clan clan: clanMember.getClans())
-			{
-				tags.appendSibling(ChatUtils.getInteractiveClanTag(clan));
-			}
-
-			event.setMessage(tags.appendSibling(event.getMessage()));
-		}
+		if(clanMember != null) event.setMessage(ChatUtils.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
 	}
 }
