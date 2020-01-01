@@ -3,7 +3,6 @@ package com.tigermouthbear.clantags.impl;
 import com.tigermouthbear.clantags.data.ClanMember;
 import com.tigermouthbear.clantags.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /***
@@ -13,11 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ChatPrefix
 {
-	public ChatPrefix()
-	{
-		MinecraftForge.EVENT_BUS.register(this);
-	}
-
 	@SubscribeEvent()
 	public void onChatMessage(ClientChatReceivedEvent event)
 	{

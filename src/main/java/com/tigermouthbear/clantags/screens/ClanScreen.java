@@ -7,8 +7,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /***
  * @author Tigermouthbear
@@ -27,9 +25,9 @@ public class ClanScreen extends GuiScreen
 	@Override
 	public void initGui()
 	{
-		this.initGui();
+		super.initGui();
 
-		buttonList.add(new DiscordButton(0, 0, clan.getDiscord()));
+		buttonList.add(new DiscordButton(width/2 - mc.fontRenderer.getStringWidth("discord.gg/" + clan.getDiscord())/2, mc.fontRenderer.FONT_HEIGHT*2+4, clan.getDiscord()));
 	}
 
 	@Override
@@ -37,7 +35,14 @@ public class ClanScreen extends GuiScreen
 	{
 		drawDefaultBackground();
 		drawCenteredScaledString(clan.getFullName(), width/2, mc.fontRenderer.FONT_HEIGHT/2, 2.0d, Utils.colors.get(clan.getColor()));
-		mc.fontRenderer.drawSplitString(clan.getDescription(), width/3, (mc.fontRenderer.FONT_HEIGHT/2 + 10) * 2, width/3, Integer.parseInt("FFFFFF", 16));
+		mc.fontRenderer.drawSplitString(clan.getDescription(), width/3, (mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2, width/3, Integer.parseInt("FFFFFF", 16));
+
+		//long thing, theres probably something better
+		int height = (int) (((mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2) + 20 + Math.ceil(mc.fontRenderer.getStringWidth(clan.getDescription()) / (width/3) * mc.fontRenderer.FONT_HEIGHT + 1));
+		drawString(mc.fontRenderer, "Allies: " + clan.allies, width/3, height, Integer.parseInt("FFFFFF", 16));
+		drawString(mc.fontRenderer, "Enemies: " + clan.enemies, width/3, height + mc.fontRenderer.FONT_HEIGHT + 1, Integer.parseInt("FFFFFF", 16));
+
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	private void drawCenteredScaledString(String text, int x, int y, double scale, String color)
@@ -51,7 +56,7 @@ public class ClanScreen extends GuiScreen
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException
 	{
-		if(button instanceof DiscordButton) Utils.openLink("https://discord.gg/" + button.id);
+		if(button instanceof DiscordButton) Utils.openLink("https://discord.gg/" + ((DiscordButton) button).getDiscord());
 
 		super.actionPerformed(button);
 	}
