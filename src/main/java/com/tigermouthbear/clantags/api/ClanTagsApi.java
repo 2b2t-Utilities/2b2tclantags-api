@@ -58,12 +58,12 @@ public class ClanTagsApi
 		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString(), jsonObject.get("discord").toString());
 
 		//Load enemies and allies
-		if(jsonObject.get("allies") != null)
+		if(jsonObject.has("allies"))
 		{
 			clan.allies = jsonObject.get("allies").toString();
 		}
 
-		if(jsonObject.get("enemies") != null)
+		if(jsonObject.has("enemies"))
 		{
 			clan.enemies = jsonObject.get("enemies").toString();
 		}
