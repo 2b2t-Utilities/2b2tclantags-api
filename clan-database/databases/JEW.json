@@ -5,14 +5,18 @@
   "color": "light_purple",
   "discord": "uHAV9bG",
   "enemies": "Emperium",
-  "members": {
-    "FarmerJoe": "19226f1595ea4d8ea76ea04ffd58139a, 4dcb5edcca48449d839e36a86447bb35, ba1dffef5fec42769a1102587e460d6d",
-    "HighAtWork": "29d36bbac25f41c983c71969f7d19e01",
-    "SPACE": "d91a711311434357ab4db9e5a125f933, a5ddf9aeeab04c00ab32a3e78ee487b5",
-    "Peu": "193f6404908a4da3b3f1227bc6bf6f84",
-    "Shiyo": "643fdba5985443fb89b5c0068baea75b",
-    "BGP": "d4c81c8bdcf94cf1bf4fecc08ad83c7e",
-    "ovalicious": "4f9358444c154d018afe845b800b941d",
-    "Tigermouthbear": "4b0610ac965f4d0d906f624c7c34a197, 758fa9ae0d384ce39732967ad44f780e"
-  }
+  "members": [
+    "19226f1595ea4d8ea76ea04ffd58139a",
+    "4dcb5edcca48449d839e36a86447bb35",
+    "ba1dffef5fec42769a1102587e460d6d",
+    "29d36bbac25f41c983c71969f7d19e01",
+    "d91a711311434357ab4db9e5a125f933",
+    "a5ddf9aeeab04c00ab32a3e78ee487b5",
+    "193f6404908a4da3b3f1227bc6bf6f84",
+    "643fdba5985443fb89b5c0068baea75b",
+    "d4c81c8bdcf94cf1bf4fecc08ad83c7e",
+    "4f9358444c154d018afe845b800b941d",
+    "4b0610ac965f4d0d906f624c7c34a197",
+    "758fa9ae0d384ce39732967ad44f780e"
+  ]
 }

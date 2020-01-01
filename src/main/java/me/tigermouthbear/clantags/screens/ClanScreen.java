@@ -1,7 +1,7 @@
-package com.tigermouthbear.clantags.screens;
+package me.tigermouthbear.clantags.screens;
 
-import com.tigermouthbear.clantags.Utils;
-import com.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.Utils;
+import me.tigermouthbear.clantags.data.Clan;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;

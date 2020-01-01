@@ -6,9 +6,12 @@
   "discord": "EkKBsrs",
   "enemies": "Unity, Everflame, The 2b2t Union, The Shadow Warriors ",
   "allies": "The Teutonic Order, The Infinity Incursion, The Gulag Builder Committe, The Black Cross, TeamNoTrees, OpWolfy FanClub",
-  "members": {
-    "GulagOnTop": "c8f52bbbd7844605-98c70091d1c7853f, c8f52bbbd784460598c70091d1c7853f",
-    "theboss24611": "4806f44194b14a67868f555b49cf00d6, 4806f44194b14a67868f555b49cf00d6",
-    "xpanda": "ecc3888b6abb4efe95e47e4400a86ac9, ecc3888b6abb4efe95e47e4400a86ac9"
-  }
+  "members": [
+    "c8f52bbbd7844605-98c70091d1c7853f",
+    "c8f52bbbd784460598c70091d1c7853f",
+    "4806f44194b14a67868f555b49cf00d6",
+    "4806f44194b14a67868f555b49cf00d6",
+    "ecc3888b6abb4efe95e47e4400a86ac9",
+    "ecc3888b6abb4efe95e47e4400a86ac9"
+  ]
 }

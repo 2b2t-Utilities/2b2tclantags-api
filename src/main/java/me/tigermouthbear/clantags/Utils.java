@@ -1,10 +1,9 @@
-package com.tigermouthbear.clantags;
+package me.tigermouthbear.clantags;
 
-import com.tigermouthbear.clantags.data.Clan;
-import com.tigermouthbear.clantags.data.ClanMember;
+import me.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.data.ClanMember;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentBase;
 import net.minecraft.util.text.TextComponentString;
 
 import java.net.URI;

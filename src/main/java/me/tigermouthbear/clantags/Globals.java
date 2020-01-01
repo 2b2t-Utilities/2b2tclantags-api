@@ -1,4 +1,4 @@
-package com.tigermouthbear.clantags;
+package me.tigermouthbear.clantags;
 
 import net.minecraft.client.Minecraft;
 

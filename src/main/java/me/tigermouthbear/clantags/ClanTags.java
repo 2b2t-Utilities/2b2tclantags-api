@@ -1,9 +1,9 @@
-package com.tigermouthbear.clantags;
+package me.tigermouthbear.clantags;
 
-import com.tigermouthbear.clantags.api.ClanTagsApi;
-import com.tigermouthbear.clantags.command.ClansCommand;
-import com.tigermouthbear.clantags.command.InfoCommand;
-import com.tigermouthbear.clantags.impl.ChatPrefix;
+import me.tigermouthbear.clantags.api.ClanTagsApi;
+import me.tigermouthbear.clantags.command.ClansCommand;
+import me.tigermouthbear.clantags.command.InfoCommand;
+import me.tigermouthbear.clantags.impl.ChatPrefix;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;

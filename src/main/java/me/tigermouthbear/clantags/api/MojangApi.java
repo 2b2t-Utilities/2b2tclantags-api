@@ -1,4 +1,4 @@
-package com.tigermouthbear.clantags.api;
+package me.tigermouthbear.clantags.api;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

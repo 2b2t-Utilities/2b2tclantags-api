@@ -1,7 +1,7 @@
-package com.tigermouthbear.clantags.impl;
+package me.tigermouthbear.clantags.impl;
 
-import com.tigermouthbear.clantags.data.ClanMember;
-import com.tigermouthbear.clantags.Utils;
+import me.tigermouthbear.clantags.data.ClanMember;
+import me.tigermouthbear.clantags.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

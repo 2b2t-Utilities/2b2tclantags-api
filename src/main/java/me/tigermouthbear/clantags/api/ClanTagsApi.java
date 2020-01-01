@@ -1,7 +1,8 @@
-package com.tigermouthbear.clantags.api;
+package me.tigermouthbear.clantags.api;
 
-import com.tigermouthbear.clantags.data.Clan;
-import com.tigermouthbear.clantags.data.ClanMember;
+import me.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.data.ClanMember;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -9,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /***
  * @author Tigermouthbear
@@ -69,33 +69,16 @@ public class ClanTagsApi
 		}
 
 		//Load members
-		JSONObject members = (JSONObject) jsonObject.get("members");
-		for(String name: members.keySet())
-		{
-			clan.addMember(getMember(name));
-
-			for(String uuid: parseUUIDS(members.get(name).toString()))
-			{
-				getMember(name).addUser(uuid);
-			}
-		}
-
+		JSONArray members = (JSONArray) jsonObject.get("members");
+		for(Object uuid: members)
+			clan.addMember(getMember(uuid.toString()));
 	}
 
-	private static ClanMember getMember(String name)
+	private static ClanMember getMember(String uuid)
 	{
 		for(ClanMember member: ClanMember.getAllClanMembers())
-		{
-			if(member.name().equals(name)) return member;
-		}
+			if(member.getUuid().equals(uuid)) return member;
 
-		return new ClanMember(name);
+		return new ClanMember(uuid);
 	}
-
-	private static ArrayList<String> parseUUIDS(String value)
-	{
-		String[] uuids = value.split(", ");
-		return new ArrayList<>(Arrays.asList(uuids));
-	}
-
 }
