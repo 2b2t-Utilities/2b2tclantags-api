@@ -1,5 +1,7 @@
 package me.tigermouthbear.clantags.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import net.minecraftforge.fml.common.FMLLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,8 +22,10 @@ public class MojangApi
 	{
 		try
 		{
+			Gson gson = new Gson();
+
 			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-			JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
+			JsonObject jsonObject = gson.fromJson(new InputStreamReader(url.openStream()), JsonObject.class);
 			return jsonObject.get("id").toString();
 		}
 		catch(IOException e)
@@ -36,8 +40,8 @@ public class MojangApi
 		try
 		{
 			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
-			JSONArray jsonObject = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
-			return ((JSONObject)jsonObject.get(jsonObject.length()-1)).get("name").toString();
+			JSONArray jsonArray = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
+			return ((JSONObject)jsonArray.get(jsonArray.length()-1)).get("name").toString();
 		}
 		catch(Exception e)
 		{
