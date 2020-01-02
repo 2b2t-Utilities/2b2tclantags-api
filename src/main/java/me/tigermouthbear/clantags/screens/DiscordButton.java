@@ -2,6 +2,7 @@ package me.tigermouthbear.clantags.screens;
 
 import me.tigermouthbear.clantags.ClanTags;
 import me.tigermouthbear.clantags.Globals;
+import me.tigermouthbear.clantags.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,7 +29,7 @@ public class DiscordButton extends GuiButton implements Globals
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks)
 	{
-		drawString(mc.fontRenderer, "discord.gg/" + discord, x, y, Integer.parseInt("5555FF", 16));
+		drawString(mc.fontRenderer, "discord.gg/" + discord, x, y, Integer.parseInt(Utils.colors.get("blue"), 16));
 		mc.getTextureManager().bindTexture(WHITE);
 		GlStateManager.color(0.33f, 0.33f, 1.0f, 1.0f);
 		drawTexturedModalRect(x, y + mc.fontRenderer.FONT_HEIGHT, 0, 0, width, 1);

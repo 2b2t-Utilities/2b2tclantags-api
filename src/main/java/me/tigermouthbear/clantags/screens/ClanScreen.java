@@ -38,9 +38,13 @@ public class ClanScreen extends GuiScreen
 		mc.fontRenderer.drawSplitString(clan.getDescription(), width/3, (mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2, width/3, Integer.parseInt("FFFFFF", 16));
 
 		//long thing, theres probably something better
-		int height = (int) (((mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2) + 20 + Math.ceil(mc.fontRenderer.getStringWidth(clan.getDescription()) / (width/3) * mc.fontRenderer.FONT_HEIGHT + 1));
-		drawString(mc.fontRenderer, "Allies: " + clan.allies, width/3, height, Integer.parseInt("FFFFFF", 16));
-		drawString(mc.fontRenderer, "Enemies: " + clan.enemies, width/3, height + mc.fontRenderer.FONT_HEIGHT + 1, Integer.parseInt("FFFFFF", 16));
+		int height = (int) (((mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2) + 20 + Math.ceil(mc.fontRenderer.getStringWidth(clan.getDescription()) / (width/3))*(mc.fontRenderer.FONT_HEIGHT + 1));
+		drawString(mc.fontRenderer, "Allies: ", width/3, height, Integer.parseInt(Utils.colors.get("green"), 16));
+		mc.fontRenderer.drawSplitString(clan.allies, width/3 + mc.fontRenderer.getStringWidth("Allies: "), height, width/3, Integer.parseInt("FFFFFF", 16));
+
+		height += (Math.ceil(mc.fontRenderer.getStringWidth("Allies: " + clan.allies) / (width/3)) + 1)*(mc.fontRenderer.FONT_HEIGHT + 1);
+		drawString(mc.fontRenderer, "Enemies: ", width/3, height, Integer.parseInt(Utils.colors.get("red"), 16));
+		mc.fontRenderer.drawSplitString(clan.enemies, width/3 + mc.fontRenderer.getStringWidth("Enemies: "), height, width/3, Integer.parseInt("FFFFFF", 16));
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

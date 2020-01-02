@@ -8,8 +8,12 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ClansCommand implements ICommand, Globals
 {
@@ -36,6 +40,7 @@ public class ClansCommand implements ICommand, Globals
 	{
 		List<String> aliases = Lists.newArrayList();
 		aliases.add("/getclans");
+		aliases.add("/clan");
 		return aliases;
 	}
 
@@ -45,11 +50,13 @@ public class ClansCommand implements ICommand, Globals
 		if(argString.length > 0)
 		{
 			ClanMember clanMember = ClanMember.getClanMemberByUsername(argString[0]);
-			Utils.printComponent(Utils.getInteractiveClanTag(clanMember));
+			TextComponentString prefix = new TextComponentString(argString[0] + "'s clans: ");
+			Utils.printComponent(prefix.appendSibling(Utils.getInteractiveClanTag(clanMember)));
 		}
 		else
 		{
-			Utils.printComponent(Utils.getAllInteractiveClanTags());
+			TextComponentString prefix = new TextComponentString("All clans: ");
+			Utils.printComponent(prefix.appendSibling(Utils.getAllInteractiveClanTags()));
 		}
 	}
 
@@ -62,7 +69,9 @@ public class ClansCommand implements ICommand, Globals
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos)
 	{
-		return null;
+		List<String> list = new ArrayList<>();
+		list.add(Objects.requireNonNull(mc.world.getClosestPlayerToEntity(mc.player, 100)).getName());
+		return list;
 	}
 
 	@Override

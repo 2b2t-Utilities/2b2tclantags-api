@@ -49,7 +49,6 @@ public class ClanTagsApi
 		{
 			loadDatabase(url);
 		}
-
 	}
 
 	private static void loadDatabase(URL url) throws Exception

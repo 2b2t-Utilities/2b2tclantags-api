@@ -36,7 +36,7 @@ public class MojangApi
 		{
 			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
 			JSONArray jsonObject = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
-			return ((JSONObject)jsonObject.get(0)).get("name").toString();
+			return ((JSONObject)jsonObject.get(jsonObject.length()-1)).get("name").toString();
 		}
 		catch(IOException e)
 		{
