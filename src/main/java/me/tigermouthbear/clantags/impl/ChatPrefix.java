@@ -44,7 +44,7 @@ public class ChatPrefix
 
 			TextComponentString first = new TextComponentString("You whisper to ");
 
-			if(clanMember != null) event.setMessage(first.appendSibling(Utils.getInteractiveClanTag(clanMember)).appendText(message.substring(message.indexOf(":"))));
+			if(clanMember != null) event.setMessage(first.appendSibling(Utils.getInteractiveClanTag(clanMember)).appendText(username).appendText(message.substring(message.indexOf(":"))));
 		}
 	}
 }

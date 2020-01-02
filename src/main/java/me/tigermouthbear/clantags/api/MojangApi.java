@@ -1,5 +1,6 @@
 package me.tigermouthbear.clantags.api;
 
+import net.minecraftforge.fml.common.FMLLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -38,9 +39,9 @@ public class MojangApi
 			JSONArray jsonObject = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
 			return ((JSONObject)jsonObject.get(jsonObject.length()-1)).get("name").toString();
 		}
-		catch(IOException e)
+		catch(Exception e)
 		{
-			e.printStackTrace();
+			FMLLog.log.info("UUID: " + uuid + " is not a valid account");
 		}
 		return null;
 	}

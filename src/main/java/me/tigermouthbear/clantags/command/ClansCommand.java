@@ -6,6 +6,8 @@ import me.tigermouthbear.clantags.Utils;
 import me.tigermouthbear.clantags.data.ClanMember;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -14,6 +16,7 @@ import net.minecraft.util.text.TextComponentString;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ClansCommand implements ICommand, Globals
 {
@@ -69,9 +72,37 @@ public class ClansCommand implements ICommand, Globals
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos)
 	{
-		List<String> list = new ArrayList<>();
-		list.add(Objects.requireNonNull(mc.world.getClosestPlayerToEntity(mc.player, 100)).getName());
-		return list;
+		if(getClosestPlayer() != null)
+		{
+			List<String> list = new ArrayList<>();
+			list.add(getClosestPlayer().getName());
+			return list;
+		}
+
+		return null;
+	}
+
+	private EntityPlayer getClosestPlayer()
+	{
+		EntityPlayer closestPlayer = null;
+
+		for(Object object: mc.world.playerEntities.stream().filter(player -> player != mc.player).toArray())
+		{
+			EntityPlayer player = (EntityPlayer) object;
+
+			if(closestPlayer == null)
+			{
+				closestPlayer = player;
+				continue;
+			}
+
+			if(player != mc.player && player.getDistanceSq(mc.player) < closestPlayer.getDistanceSq(mc.player))
+			{
+				closestPlayer = player;
+			}
+		}
+
+		return closestPlayer;
 	}
 
 	@Override
