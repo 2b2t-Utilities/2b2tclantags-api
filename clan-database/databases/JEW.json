@@ -4,7 +4,8 @@
   "description": "The Jew Masons are a chill group dedicated to having fun. We have several bases and all recruits get stash access upon joining. We accept new and old players alike, and give away kits at spawn.",
   "color": "light_purple",
   "discord": "uHAV9bG",
-  "enemies": "Emperium, Brownmen",
+  "allies": "Browmen",
+  "enemies": "Emperium",
   "members": [
     "19226f1595ea4d8ea76ea04ffd58139a",
     "4dcb5edcca48449d839e36a86447bb35",
