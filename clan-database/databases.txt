@@ -4,3 +4,4 @@ https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-databa
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/CG.json
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/TTO.json
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/GS.json
+https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/EMP.json
