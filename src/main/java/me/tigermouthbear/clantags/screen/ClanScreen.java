@@ -1,4 +1,4 @@
-package me.tigermouthbear.clantags.screens;
+package me.tigermouthbear.clantags.screen;
 
 import me.tigermouthbear.clantags.Utils;
 import me.tigermouthbear.clantags.data.Clan;

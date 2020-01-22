@@ -1,7 +1,7 @@
 package me.tigermouthbear.clantags.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import net.minecraftforge.fml.common.FMLLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,15 +18,21 @@ import java.net.URL;
 
 public class MojangApi
 {
+	//<UUID, Username>
+	private static BiMap<String, String> playerCache = HashBiMap.create();
+
 	public static String getUuid(String name)
 	{
+		if(playerCache.containsValue(name)) return playerCache.inverse().get(name);
+
 		try
 		{
-			Gson gson = new Gson();
-
 			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-			JsonObject jsonObject = gson.fromJson(new InputStreamReader(url.openStream()), JsonObject.class);
-			return jsonObject.get("id").toString();
+			JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
+
+			String uuid = jsonObject.get("id").toString();
+			playerCache.put(uuid, name);
+			return uuid;
 		}
 		catch(IOException e)
 		{
@@ -37,11 +43,16 @@ public class MojangApi
 
 	public static String getUsername(String uuid)
 	{
+		if(playerCache.containsKey(uuid)) return playerCache.get(uuid);
+
 		try
 		{
 			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
 			JSONArray jsonArray = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
-			return ((JSONObject)jsonArray.get(jsonArray.length()-1)).get("name").toString();
+
+			String name = ((JSONObject)jsonArray.get(jsonArray.length()-1)).get("name").toString();
+			playerCache.put(uuid, name);
+			return name;
 		}
 		catch(Exception e)
 		{

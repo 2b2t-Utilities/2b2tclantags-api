@@ -15,11 +15,9 @@ public class ClanMember
 
 	private ArrayList<Clan> clans = new ArrayList<>();
 	private String uuid;
-	private String name;
 
 	public ClanMember(String uuid)
 	{
-		this.name = MojangApi.getUsername(uuid);
 		this.uuid = uuid;
 		allClanMembers.add(this);
 	}
@@ -29,9 +27,10 @@ public class ClanMember
 		return clans;
 	}
 
+	//Do not loop over!
 	public String getName()
 	{
-		return name;
+		return MojangApi.getUsername(uuid);
 	}
 
 	public String getUuid()
@@ -46,15 +45,7 @@ public class ClanMember
 
 	public static ClanMember getClanMemberByUsername(String name)
 	{
-		for(ClanMember member: allClanMembers)
-		{
-			if(member.name.equalsIgnoreCase(name))
-			{
-				return member;
-			}
-		}
-
-		return null;
+		return getClanMemberByUuid(MojangApi.getUuid(name));
 	}
 
 	public static ClanMember getClanMemberByUuid(String uuid)
