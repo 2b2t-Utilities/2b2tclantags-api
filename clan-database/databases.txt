@@ -7,3 +7,5 @@ https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-databa
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/EMP.json
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/DANK.json
 https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/XIV.json
+https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/HYPE.json
+https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases/Z.json
