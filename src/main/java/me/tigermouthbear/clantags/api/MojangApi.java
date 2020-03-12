@@ -13,40 +13,32 @@ import java.net.URL;
 
 /***
  * @author Tigermouthbear
- * 12/30/19
+ * @since 12/30/19
  */
-
-public class MojangApi
-{
+public class MojangApi {
 	//<UUID, Username>
 	private static BiMap<String, String> playerCache = HashBiMap.create();
 
-	public static String getUuid(String name)
-	{
+	public static String getUuid(String name) {
 		if(playerCache.containsValue(name)) return playerCache.inverse().get(name);
 
-		try
-		{
+		try {
 			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
 			JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
 
 			String uuid = jsonObject.get("id").toString();
 			playerCache.put(uuid, name);
 			return uuid;
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static String getUsername(String uuid)
-	{
+	public static String getUsername(String uuid) {
 		if(playerCache.containsKey(uuid)) return playerCache.get(uuid);
 
-		try
-		{
+		try {
 			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
 			JSONArray jsonArray = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
 
@@ -54,8 +46,7 @@ public class MojangApi
 			playerCache.put(uuid, name);
 			return name;
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			FMLLog.log.info("UUID: " + uuid + " is not a valid account");
 		}
 		return null;

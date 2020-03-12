@@ -1,34 +1,33 @@
-package me.tigermouthbear.clantags.screen;
+package me.tigermouthbear.clantags.api.screen;
 
-import me.tigermouthbear.clantags.ClanTags;
-import me.tigermouthbear.clantags.Globals;
-import me.tigermouthbear.clantags.Utils;
+import me.tigermouthbear.clantags.api.Utils;
+import me.tigermouthbear.clantags.impl.ClanTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-public class DiscordButton extends GuiButton implements Globals
-{
+/**
+ * @author Tigermouthbear
+ * @since 12/30/19
+ */
+class DiscordButton extends GuiButton {
 	private static final ResourceLocation WHITE = new ResourceLocation(ClanTags.MODID, "white.png");
 
 	private String discord;
 
-	public DiscordButton(int x, int y, String discord)
-	{
+	DiscordButton(Minecraft mc, int x, int y, String discord) {
 		//only should be 1 discord button per clanscreen
 		super(69, x, y, mc.fontRenderer.getStringWidth("discord.gg/" + discord), mc.fontRenderer.FONT_HEIGHT+2, "");
 		this.discord = discord;
 	}
 
-	public String getDiscord()
-	{
+	String getDiscord() {
 		return discord;
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		drawString(mc.fontRenderer, "discord.gg/" + discord, x, y, Integer.parseInt(Utils.colors.get("blue"), 16));
 		mc.getTextureManager().bindTexture(WHITE);
 		GlStateManager.color(0.33f, 0.33f, 1.0f, 1.0f);

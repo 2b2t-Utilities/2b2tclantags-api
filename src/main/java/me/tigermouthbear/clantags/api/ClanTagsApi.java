@@ -1,83 +1,103 @@
 package me.tigermouthbear.clantags.api;
 
-import me.tigermouthbear.clantags.data.Clan;
-import me.tigermouthbear.clantags.data.ClanMember;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
+import me.tigermouthbear.clantags.api.command.ClansCommand;
+import me.tigermouthbear.clantags.api.command.InfoCommand;
+import me.tigermouthbear.clantags.api.data.Clan;
+import me.tigermouthbear.clantags.api.data.ClanMember;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.play.client.CPacketChatMessage;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 /***
  * @author Tigermouthbear
- * 12/3/19
+ * @since 3/12/19
  */
-
-public class ClanTagsApi
-{
+public class ClanTagsApi {
 	private static final String CLAN_DATABASE = "https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases.txt";
 
-	public static void loadClans()
-	{
-		try
-		{
-			loadClans(CLAN_DATABASE);
+	public static Minecraft MC;
+
+	public static void loadClans(Minecraft minecraft) {
+		MC = minecraft;
+		DatabaseApi.loadDatabase(minecraft);
+	}
+
+	public static Clan getClan(String nameOrAbbreviation) {
+		for(Clan clan: Clan.getAllClans()) {
+			if(clan.getAbbreviation().equalsIgnoreCase(nameOrAbbreviation) || clan.getFullName().equalsIgnoreCase(nameOrAbbreviation)) return clan;
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
+
+		return null;
+	}
+
+	public static ClanMember getClanMemberByUsername(String name) {
+		return getClanMemberByUuid(MojangApi.getUuid(name));
+	}
+
+	public static ClanMember getClanMemberByUuid(String uuid) {
+		for(ClanMember member: ClanMember.getAllClanMembers()) {
+			if(member.getUuid().equalsIgnoreCase(uuid)) {
+				return member;
+			}
+		}
+
+		return null;
+	}
+
+	public static ITextComponent getInteractiveClanTag(ClanMember member) {
+		TextComponentString component = new TextComponentString("");
+		for(Clan clan: member.getClans()) {
+			component.appendSibling(ITextComponent.Serializer.jsonToComponent("{\"text\":\"[" + clan.getAbbreviation() + "] \",\"color\":\"" + clan.getColor() + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/info " + clan.getAbbreviation() + "\"}}"));
+		}
+
+		return component;
+	}
+
+	public static ITextComponent getAllInteractiveClanTags() {
+		TextComponentString component = new TextComponentString("");
+		for(Clan clan: Clan.getAllClans()) {
+			component.appendSibling(ITextComponent.Serializer.jsonToComponent("{\"text\":\"[" + clan.getAbbreviation() + "] \",\"color\":\"" + clan.getColor() + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/info " + clan.getAbbreviation() + "\"}}"));
+		}
+
+		return component;
+	}
+
+	public static void onClientChatReceivedEvent(ClientChatReceivedEvent event) {
+		String message = event.getMessage().getUnformattedText();
+
+		if(message.startsWith("<")) {
+			String username = message.split("<")[1].split(">")[0];
+			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+
+			if(clanMember != null) event.setMessage(ClanTagsApi.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+		}
+		else if(message.contains(" whispers: ")) {
+			String username = message.split(" ")[0];
+			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+
+			if(clanMember != null) event.setMessage(ClanTagsApi.getInteractiveClanTag(clanMember).appendSibling(event.getMessage()));
+		}
+		else if(message.startsWith("to ")) {
+			String beginning = message.substring(0, message.indexOf(":"));
+			String[] arr = beginning.split(" ");
+			String username = arr[arr.length - 1];
+			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+
+			TextComponentString first = new TextComponentString("to ");
+
+			if(clanMember != null) event.setMessage(first.appendSibling(ClanTagsApi.getInteractiveClanTag(clanMember)).appendText(username).appendText(message.substring(message.indexOf(":"))));
 		}
 	}
 
-	private static void loadClans(String main_database) throws Exception
-	{
-		//Query for all individual clan databases
-		URL clanDatabase = new URL(main_database);
-		BufferedReader in = new BufferedReader(new InputStreamReader(clanDatabase.openStream()));
-
-		ArrayList<URL> databases = new ArrayList<>();
-		String inputLine;
-		while((inputLine = in.readLine()) != null)
-			databases.add(new URL(inputLine));
-		in.close();
-
-		//Create a clan object for each database
-		for(URL url: databases)
-		{
-			loadDatabase(url);
-		}
+	public static void onCPacketChatMessage(CPacketChatMessage packet) {
+		// WORK IN PROGRESS
+		Utils.printMessage("message: " + packet.getMessage());
 	}
 
-	private static void loadDatabase(URL url) throws Exception
-	{
-		JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
-		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString(), jsonObject.get("discord").toString());
-
-		//Load enemies and allies
-		if(jsonObject.has("allies"))
-		{
-			clan.allies = jsonObject.get("allies").toString();
-		}
-
-		if(jsonObject.has("enemies"))
-		{
-			clan.enemies = jsonObject.get("enemies").toString();
-		}
-
-		//Load members
-		JSONArray members = (JSONArray) jsonObject.get("members");
-		for(Object uuid: members)
-			clan.addMember(getMember(uuid.toString()));
-	}
-
-	private static ClanMember getMember(String uuid)
-	{
-		for(ClanMember member: ClanMember.getAllClanMembers())
-			if(member.getUuid().equals(uuid)) return member;
-
-		return new ClanMember(uuid);
+	public static class Command {
+		public static final ClansCommand CLANS_COMMAND = new ClansCommand();
+		public static final InfoCommand INFO_COMMAND = new InfoCommand();
 	}
 }

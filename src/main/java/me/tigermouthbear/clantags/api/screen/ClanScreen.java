@@ -1,7 +1,7 @@
-package me.tigermouthbear.clantags.screen;
+package me.tigermouthbear.clantags.api.screen;
 
-import me.tigermouthbear.clantags.Utils;
-import me.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.api.Utils;
+import me.tigermouthbear.clantags.api.data.Clan;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,29 +10,24 @@ import java.io.IOException;
 
 /***
  * @author Tigermouthbear
- * 12/30/19
+ * @since 12/30/19
  */
-
-public class ClanScreen extends GuiScreen
-{
+public class ClanScreen extends GuiScreen {
 	private Clan clan;
 
-	public ClanScreen(Clan clan)
-	{
+	public ClanScreen(Clan clan) {
 		this.clan = clan;
 	}
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		super.initGui();
 
-		buttonList.add(new DiscordButton(width/2 - mc.fontRenderer.getStringWidth("discord.gg/" + clan.getDiscord())/2, mc.fontRenderer.FONT_HEIGHT*2+4, clan.getDiscord()));
+		buttonList.add(new DiscordButton(mc, width/2 - mc.fontRenderer.getStringWidth("discord.gg/" + clan.getDiscord())/2, mc.fontRenderer.FONT_HEIGHT*2+4, clan.getDiscord()));
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 		drawCenteredScaledString(clan.getFullName(), width/2, mc.fontRenderer.FONT_HEIGHT/2, 2.0d, Utils.colors.get(clan.getColor()));
 		mc.fontRenderer.drawSplitString(clan.getDescription(), width/3, (mc.fontRenderer.FONT_HEIGHT/2 + 15) * 2, width/3, Integer.parseInt("FFFFFF", 16));
@@ -49,8 +44,7 @@ public class ClanScreen extends GuiScreen
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void drawCenteredScaledString(String text, int x, int y, double scale, String color)
-	{
+	private void drawCenteredScaledString(String text, int x, int y, double scale, String color) {
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(scale, scale, 1);
 		drawCenteredString(mc.fontRenderer, text, (int)(x/scale), (int)(y/scale), Integer.parseInt(color, 16));
@@ -58,16 +52,14 @@ public class ClanScreen extends GuiScreen
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
-	{
+	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button instanceof DiscordButton) Utils.openLink("https://discord.gg/" + ((DiscordButton) button).getDiscord());
 
 		super.actionPerformed(button);
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return false;
 	}
 }
