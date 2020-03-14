@@ -1,7 +1,6 @@
-package me.tigermouthbear.clantags.api.screen;
+package me.tigermouthbear.clantags.screen;
 
-import me.tigermouthbear.clantags.api.Utils;
-import me.tigermouthbear.clantags.impl.ClanTags;
+import me.tigermouthbear.clantags.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
  * @since 12/30/19
  */
 class DiscordButton extends GuiButton {
-	private static final ResourceLocation WHITE = new ResourceLocation(ClanTags.MODID, "white.png");
+	private static final ResourceLocation WHITE = new ResourceLocation("2b2tclantags", "white.png");
 
 	private String discord;
 

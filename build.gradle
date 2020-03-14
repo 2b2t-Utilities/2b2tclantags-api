@@ -5,21 +5,15 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-
-        maven {
-            name = "SpongePowered"
-            url = "http://repo.spongepowered.org/maven"
-        }
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
     }
 }
+
 apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "com.github.johnrengelman.shadow"
 
 version = project.modVersion
 group = project.modGroup
@@ -34,15 +28,10 @@ minecraft {
     version = project.forgeVersion
     runDir = "run"
     mappings = project.mcpVersion
-    coreMod = 'me.tigermouthbear.clantags.impl.mixin.MixinLoader'
-    makeObfSourceJar = false
+    //makeObfSourceJar = false
 }
 
 repositories {
-    maven {
-        name = "spongepowered-repo"
-        url = "http://repo.spongepowered.org/maven/"
-    }
     maven {
         name = "jitpack.io"
         url = "https://jitpack.io"
@@ -50,13 +39,6 @@ repositories {
 }
 
 dependencies {
-    compile("org.spongepowered:mixin:0.7.8-SNAPSHOT") {
-        exclude module: 'launchwrapper'
-        exclude module: 'guava'
-        exclude module: 'gson'
-        exclude module: 'commons-io'
-    }
-    
     compile "org.json:json:20190722"
     runtime fileTree(dir: "libs", include: "*.jar")
 }
@@ -80,37 +62,17 @@ processResources {
     }
 }
 
-mixin {
-    defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.clantags.refmap.json'
-}
-
 shadowJar {
     dependencies {
-        include(dependency('org.spongepowered:mixin'))
+        include(dependency("org.json:json"))
     }
-    exclude 'dummyThing'
-    exclude 'LICENSE.txt'
-    classifier = 'release'
+    classifier = "release"
 }
 
 reobf {
     shadowJar {
-        mappingType = 'SEARGE'
+        mappingType = "SEARGE"
         classpath = sourceSets.main.compileClasspath
-    }
-}
-
-jar {
-    manifest {
-        attributes(
-                'MixinConfigs': 'mixins.clantags.json',
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                'TweakOrder': 0,
-                'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'me.tigermouthbear.clantags.mixin.MixinLoader',
-                'ForceLoadAsMod': 'true'
-        )
     }
 }
 

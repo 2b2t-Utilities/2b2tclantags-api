@@ -1,4 +1,7 @@
-package me.tigermouthbear.clantags.api.data;
+package me.tigermouthbear.clantags.data;
+
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 
@@ -23,6 +26,15 @@ public class ClanMember {
 
 	public String getUuid() {
 		return uuid;
+	}
+
+	public ITextComponent getInteractiveClanTags() {
+		TextComponentString component = new TextComponentString("");
+		for(Clan clan: getClans()) {
+			component.appendSibling(clan.getInteractiveTag());
+		}
+
+		return component;
 	}
 
 	public static ArrayList<ClanMember> getAllClanMembers() {

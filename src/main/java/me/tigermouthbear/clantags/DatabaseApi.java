@@ -1,7 +1,7 @@
-package me.tigermouthbear.clantags.api;
+package me.tigermouthbear.clantags;
 
-import me.tigermouthbear.clantags.api.data.Clan;
-import me.tigermouthbear.clantags.api.data.ClanMember;
+import me.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.data.ClanMember;
 import net.minecraft.client.Minecraft;
 import org.json.JSONArray;
 import org.json.JSONObject;

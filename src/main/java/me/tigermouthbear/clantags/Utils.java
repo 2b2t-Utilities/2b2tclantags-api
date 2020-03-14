@@ -1,4 +1,4 @@
-package me.tigermouthbear.clantags.api;
+package me.tigermouthbear.clantags;
 
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;
@@ -8,19 +8,17 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.tigermouthbear.clantags.api.ClanTagsApi.MC;
-
 /***
  * @author Tigermouthbear
  * @since 12/30/19
  */
 public class Utils {
 	public static void printComponent(ITextComponent component) {
-		MC.ingameGUI.addChatMessage(ChatType.SYSTEM, component);
+		ClanTagsApi.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, component);
 	}
 
 	public static void printMessage(String text) {
-		MC.ingameGUI.addChatMessage(ChatType.SYSTEM, new TextComponentString(text));
+		ClanTagsApi.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, new TextComponentString(text));
 	}
 
 	public static final Map<String, String> colors = new HashMap<String, String>(){{

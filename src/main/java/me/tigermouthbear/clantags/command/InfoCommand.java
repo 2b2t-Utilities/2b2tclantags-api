@@ -1,9 +1,10 @@
-package me.tigermouthbear.clantags.api.command;
+package me.tigermouthbear.clantags.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.api.ClanTagsApi;
-import me.tigermouthbear.clantags.api.data.Clan;
-import me.tigermouthbear.clantags.api.screen.ClanScreen;
+import me.tigermouthbear.clantags.ClanTagsApi;
+import me.tigermouthbear.clantags.Utils;
+import me.tigermouthbear.clantags.data.Clan;
+import me.tigermouthbear.clantags.screen.ClanScreen;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -13,8 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
-
-import static me.tigermouthbear.clantags.api.ClanTagsApi.MC;
 
 /***
  * @author Tigermouthbear
@@ -51,12 +50,16 @@ public class InfoCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-		execute(args);
+		if(!execute(args)) Utils.printMessage("Clan not found!");
 	}
 
-	public static void execute(String[] args) {
-		MC.displayGuiScreen(null);
-		clanToOpen = ClanTagsApi.getClan(args[0]);
+	public static boolean execute(String[] args) {
+		if(args.length == 1) {
+			ClanTagsApi.MC.displayGuiScreen(null);
+			clanToOpen = ClanTagsApi.getClan(args[0]);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -76,9 +79,9 @@ public class InfoCommand implements ICommand {
 
 	@SubscribeEvent
 	public void renderTickEvent(TickEvent.RenderTickEvent event) {
-		if(MC.currentScreen == null && clanToOpen != null)
+		if(ClanTagsApi.MC.currentScreen == null && clanToOpen != null)
 		{
-			MC.displayGuiScreen(new ClanScreen(clanToOpen));
+			ClanTagsApi.MC.displayGuiScreen(new ClanScreen(clanToOpen));
 			clanToOpen = null;
 		}
 	}

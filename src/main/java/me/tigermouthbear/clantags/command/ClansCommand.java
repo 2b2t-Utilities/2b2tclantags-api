@@ -1,9 +1,9 @@
-package me.tigermouthbear.clantags.api.command;
+package me.tigermouthbear.clantags.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.api.ClanTagsApi;
-import me.tigermouthbear.clantags.api.Utils;
-import me.tigermouthbear.clantags.api.data.ClanMember;
+import me.tigermouthbear.clantags.ClanTagsApi;
+import me.tigermouthbear.clantags.Utils;
+import me.tigermouthbear.clantags.data.ClanMember;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,15 +12,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-
-import static me.tigermouthbear.clantags.api.ClanTagsApi.MC;
+import java.util.stream.Collectors;
 
 /**
  * @author Tigermouthbear
  * @since 3/12/20
  */
 public class ClansCommand implements ICommand {
+	private static final DistanceComparator distanceComparator = new DistanceComparator();
+
 	@Override
 	public int compareTo(ICommand arg0) {
 		return 1;
@@ -46,14 +48,16 @@ public class ClansCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-		executeClanCommand(args);
+		if(args.length != 0 && args.length != 1) Utils.printMessage("Command not found!");
+		if(!executeClanCommand(args)) Utils.printMessage("Player not found!");
 	}
 
 	public boolean executeClanCommand(String[] args) {
 		if(args.length == 1) {
 			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(args[0]);
+			if(clanMember == null) return false;
 			TextComponentString prefix = new TextComponentString(args[0] + "'s clans: ");
-			Utils.printComponent(prefix.appendSibling(ClanTagsApi.getInteractiveClanTag(clanMember)));
+			Utils.printComponent(prefix.appendSibling(clanMember.getInteractiveClanTags()));
 			return true;
 		} else if(args.length == 0) {
 			TextComponentString prefix = new TextComponentString("All clans: ");
@@ -71,40 +75,20 @@ public class ClansCommand implements ICommand {
 
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos) {
-		return getClanTabComplete();
-	}
-
-	public List<String> getClanTabComplete() {
-		if(getClosestPlayer() != null) {
-			List<String> list = new ArrayList<>();
-			list.add(getClosestPlayer().getName());
-			return list;
-		}
-
-		return null;
-	}
-
-	private EntityPlayer getClosestPlayer() {
-		EntityPlayer closestPlayer = null;
-
-		for(Object object: MC.world.playerEntities.stream().filter(player -> player != MC.player).toArray()) {
-			EntityPlayer player = (EntityPlayer) object;
-
-			if(closestPlayer == null) {
-				closestPlayer = player;
-				continue;
-			}
-
-			if(player != MC.player && player.getDistanceSq(MC.player) < closestPlayer.getDistanceSq(MC.player)) {
-				closestPlayer = player;
-			}
-		}
-
-		return closestPlayer;
+		List<String> list = new ArrayList<>();
+		for(EntityPlayer entityPlayer: ClanTagsApi.MC.world.playerEntities.stream().filter(entityPlayer -> entityPlayer != ClanTagsApi.MC.player).sorted(distanceComparator).collect(Collectors.toList()))
+			list.add(entityPlayer.getName());
+		return list;
 	}
 
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
 		return false;
+	}
+}
+
+class DistanceComparator implements Comparator<EntityPlayer> {
+	public int compare(EntityPlayer e1, EntityPlayer e2) {
+		return Float.compare(e1.getDistance(ClanTagsApi.MC.player), e2.getDistance(ClanTagsApi.MC.player));
 	}
 }
