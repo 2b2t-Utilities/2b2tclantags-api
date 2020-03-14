@@ -1,9 +1,9 @@
-package me.tigermouthbear.clantags.command;
+package me.tigermouthbear.clantags.api.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.ClanTagsApi;
-import me.tigermouthbear.clantags.Utils;
-import me.tigermouthbear.clantags.data.ClanMember;
+import me.tigermouthbear.clantags.api.ClanTagsApi;
+import me.tigermouthbear.clantags.api.Utils;
+import me.tigermouthbear.clantags.api.data.ClanMember;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

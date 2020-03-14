@@ -1,4 +1,4 @@
-package me.tigermouthbear.clantags.data;
+package me.tigermouthbear.clantags.api.data;
 
 import net.minecraft.util.text.ITextComponent;
 

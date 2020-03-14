@@ -1,4 +1,4 @@
-package me.tigermouthbear.clantags;
+package me.tigermouthbear.clantags.api;
 
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;

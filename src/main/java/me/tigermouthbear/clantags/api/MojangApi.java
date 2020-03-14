@@ -1,4 +1,4 @@
-package me.tigermouthbear.clantags;
+package me.tigermouthbear.clantags.api;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
