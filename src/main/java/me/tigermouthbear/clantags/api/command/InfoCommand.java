@@ -53,7 +53,7 @@ public class InfoCommand implements ICommand {
 		if(!execute(args)) Utils.printMessage("Clan not found!");
 	}
 
-	public static boolean execute(String[] args) {
+	public boolean execute(String[] args) {
 		if(args.length == 1) {
 			ClanTagsApi.MC.displayGuiScreen(null);
 			clanToOpen = ClanTagsApi.getClan(args[0]);
