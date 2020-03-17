@@ -42,11 +42,10 @@ public class MojangApi {
 			URL url = new URL("https://api.mojang.com/user/profiles/" + uuid + "/names");
 			JSONArray jsonArray = new JSONArray(new JSONTokener(new InputStreamReader(url.openStream())));
 
-			String name = ((JSONObject)jsonArray.get(jsonArray.length()-1)).get("name").toString();
+			String name = ((JSONObject) jsonArray.get(jsonArray.length() - 1)).get("name").toString();
 			playerCache.put(uuid, name);
 			return name;
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			FMLLog.log.info("UUID: " + uuid + " is not a valid account");
 		}
 		return null;

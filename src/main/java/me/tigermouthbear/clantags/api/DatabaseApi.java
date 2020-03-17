@@ -22,7 +22,7 @@ class DatabaseApi {
 	public static void loadDatabase(Minecraft mc) {
 		try {
 			loadDatabase(CLAN_DATABASE);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -49,13 +49,11 @@ class DatabaseApi {
 		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString(), jsonObject.get("discord").toString());
 
 		//Load enemies and allies
-		if(jsonObject.has("allies"))
-		{
+		if(jsonObject.has("allies")) {
 			clan.allies = jsonObject.get("allies").toString();
 		}
 
-		if(jsonObject.has("enemies"))
-		{
+		if(jsonObject.has("enemies")) {
 			clan.enemies = jsonObject.get("enemies").toString();
 		}
 

@@ -21,7 +21,7 @@ public class Utils {
 		ClanTagsApi.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, new TextComponentString(text));
 	}
 
-	public static final Map<String, String> colors = new HashMap<String, String>(){{
+	public static final Map<String, String> colors = new HashMap<String, String>() {{
 		put("black", "000000");
 		put("dark_blue", "0000AA");
 		put("dark_green", "00AA00");
@@ -46,7 +46,7 @@ public class Utils {
 			Class<?> oclass = Class.forName("java.awt.Desktop");
 			Object object = oclass.getMethod("getDesktop").invoke(null);
 			oclass.getMethod("browse", URI.class).invoke(object, uri);
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

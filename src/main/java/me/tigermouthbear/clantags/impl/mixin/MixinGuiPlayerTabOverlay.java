@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 public class MixinGuiPlayerTabOverlay {
 	/**
 	 * Adds clantags to tab overlay
+	 *
 	 * @author Tigermouthbear
 	 */
 	@Overwrite

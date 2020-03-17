@@ -6,11 +6,12 @@ import me.tigermouthbear.clantags.api.data.Clan;
 import me.tigermouthbear.clantags.api.data.ClanMember;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+
+import java.util.ArrayList;
 
 /***
  * @author Tigermouthbear
@@ -26,18 +27,21 @@ public class ClanTagsApi {
 
 	public static Clan getClan(String nameOrAbbreviation) {
 		for(Clan clan: Clan.getAllClans()) {
-			if(clan.getAbbreviation().equalsIgnoreCase(nameOrAbbreviation) || clan.getFullName().equalsIgnoreCase(nameOrAbbreviation)) return clan;
+			if(clan.getAbbreviation().equalsIgnoreCase(nameOrAbbreviation) || clan.getFullName().equalsIgnoreCase(nameOrAbbreviation))
+				return clan;
 		}
 
 		return null;
 	}
 
 	public static ClanMember getClanMemberByUsername(String name) {
-		for(EntityPlayer player: MC.world.playerEntities) {
-			if(player.getName().equals(name)) return getClanMemberByUuid(player.getUniqueID().toString().replaceAll("-", ""));
+		ArrayList<NetworkPlayerInfo> infoMap = new ArrayList<NetworkPlayerInfo>(MC.getConnection().getPlayerInfoMap());
+		NetworkPlayerInfo profile = infoMap.stream().filter(networkPlayerInfo -> networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+		if(profile == null) {
+			return getClanMemberByUuid(MojangApi.getUuid(name));
 		}
 
-		return getClanMemberByUuid(MojangApi.getUuid(name));
+		return getClanMemberByUuid(profile.getGameProfile().getId().toString().replaceAll("-", ""));
 	}
 
 	public static ClanMember getClanMemberByUuid(String uuid) {
@@ -58,7 +62,7 @@ public class ClanTagsApi {
 	}
 
 	public static String handlePlayerTab(NetworkPlayerInfo networkPlayerInfoIn) {
-		String originalName = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+		String originalName = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText(): ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
 		ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(networkPlayerInfoIn.getGameProfile().getName());
 		if(clanMember != null) return clanMember.getInteractiveClanTags().getFormattedText() + originalName;
 		return originalName;
@@ -71,15 +75,15 @@ public class ClanTagsApi {
 			String username = message.split("<")[1].split(">")[0];
 			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
 
-			if(clanMember != null) event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
-		}
-		else if(message.contains(" whispers: ")) {
+			if(clanMember != null)
+				event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
+		} else if(message.contains(" whispers: ")) {
 			String username = message.split(" ")[0];
 			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
 
-			if(clanMember != null) event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
-		}
-		else if(message.startsWith("to ")) {
+			if(clanMember != null)
+				event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
+		} else if(message.startsWith("to ")) {
 			String beginning = message.substring(0, message.indexOf(":"));
 			String[] arr = beginning.split(" ");
 			String username = arr[arr.length - 1];
@@ -87,7 +91,8 @@ public class ClanTagsApi {
 
 			TextComponentString first = new TextComponentString("to ");
 
-			if(clanMember != null) event.setMessage(first.appendSibling(clanMember.getInteractiveClanTags()).appendText(username).appendText(message.substring(message.indexOf(":"))));
+			if(clanMember != null)
+				event.setMessage(first.appendSibling(clanMember.getInteractiveClanTags()).appendText(username).appendText(message.substring(message.indexOf(":"))));
 		}
 	}
 

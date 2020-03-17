@@ -17,7 +17,7 @@ class DiscordButton extends GuiButton {
 
 	DiscordButton(Minecraft mc, int x, int y, String discord) {
 		//only should be 1 discord button per clanscreen
-		super(69, x, y, mc.fontRenderer.getStringWidth("discord.gg/" + discord), mc.fontRenderer.FONT_HEIGHT+2, "");
+		super(69, x, y, mc.fontRenderer.getStringWidth("discord.gg/" + discord), mc.fontRenderer.FONT_HEIGHT + 2, "");
 		this.discord = discord;
 	}
 

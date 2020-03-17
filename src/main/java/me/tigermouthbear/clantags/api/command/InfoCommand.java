@@ -79,8 +79,7 @@ public class InfoCommand implements ICommand {
 
 	@SubscribeEvent
 	public void renderTickEvent(TickEvent.RenderTickEvent event) {
-		if(ClanTagsApi.MC.currentScreen == null && clanToOpen != null)
-		{
+		if(ClanTagsApi.MC.currentScreen == null && clanToOpen != null) {
 			ClanTagsApi.MC.displayGuiScreen(new ClanScreen(clanToOpen));
 			clanToOpen = null;
 		}
