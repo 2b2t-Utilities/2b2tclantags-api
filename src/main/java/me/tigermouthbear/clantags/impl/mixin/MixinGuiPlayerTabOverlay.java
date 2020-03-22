@@ -19,6 +19,6 @@ public class MixinGuiPlayerTabOverlay {
 	 */
 	@Overwrite
 	public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn) {
-		return ClanTagsApi.handlePlayerTab(networkPlayerInfoIn);
+		return ClanTagsApi.handlePlayerTab(networkPlayerInfoIn); // handle player tab overlay
 	}
 }

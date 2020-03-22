@@ -24,16 +24,16 @@ public class ClanTags {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		ClanTagsApi.loadClans(Minecraft.getMinecraft());
-
-		ClientCommandHandler.instance.registerCommand(new InfoCommand());
-		ClientCommandHandler.instance.registerCommand(new ClansCommand());
+		ClanTagsApi.loadClans(Minecraft.getMinecraft()); // load clan database
+		ClanTagsApi.PREFIX = "/"; // set the prefix of the command
+		ClientCommandHandler.instance.registerCommand(new InfoCommand()); // register commands
+		ClientCommandHandler.instance.registerCommand(new ClansCommand()); // see each command for method to run on execute
 
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@SubscribeEvent
 	public void onChatMessage(ClientChatReceivedEvent event) {
-		ClanTagsApi.handleClientChatReceivedEvent(event);
+		ClanTagsApi.handleClientChatReceivedEvent(event); // handle chat messages received
 	}
 }

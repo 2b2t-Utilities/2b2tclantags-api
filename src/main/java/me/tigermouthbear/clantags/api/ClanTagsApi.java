@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * @since 3/12/19
  */
 public class ClanTagsApi {
+	//prefix for info command
+	public static String PREFIX = "/";
 	public static Minecraft MC;
 
 	public static void loadClans(Minecraft minecraft) {
