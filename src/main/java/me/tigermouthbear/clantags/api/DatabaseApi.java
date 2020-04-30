@@ -3,13 +3,18 @@ package me.tigermouthbear.clantags.api;
 import me.tigermouthbear.clantags.api.data.Clan;
 import me.tigermouthbear.clantags.api.data.ClanMember;
 import net.minecraft.client.Minecraft;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -40,12 +45,24 @@ class DatabaseApi {
 
 		//Create a clan object for each database
 		for(URL url: databases) {
-			loadDatabase(url);
+			JSONObject data = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
+			makeClan(data);
+		}
+		// Load local clan data from the "extraclan" folder
+		Path localdb = Paths.get("extraclan");
+		if (Files.exists(localdb)) {
+			File folder = new File("extraclan");
+			File[] listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile()) {
+					  JSONObject data = new JSONObject(new JSONTokener(new String(Files.readAllBytes(Paths.get("extraclan/" + listOfFiles[i].getName())))));
+					  makeClan(data);
+				}
+			}
 		}
 	}
 
-	private static void loadDatabase(URL url) throws Exception {
-		JSONObject jsonObject = new JSONObject(new JSONTokener(new InputStreamReader(url.openStream())));
+	private static void makeClan(JSONObject jsonObject) throws Exception {
 		Clan clan = new Clan(jsonObject.get("abbreviation").toString(), jsonObject.get("full_name").toString(), jsonObject.get("description").toString(), jsonObject.get("color").toString(), jsonObject.get("discord").toString());
 
 		//Load enemies and allies
