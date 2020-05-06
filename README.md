@@ -1,8 +1,11 @@
 # 2b2tclantags
-A forgemod used to identify clans on 2b2t https://discord.gg/MhFumnv
+An API used to identify clans on 2b2t
 
-## Api
-You are free to use the api in your projects, look at the impl folder for an example of how to use it
+## Discord
+https://discord.gg/MhFumnv
+
+## Use
+make this section!
 
 ## Contributing
 - provide anything changed, added, or deleted in your pull request
