@@ -49,7 +49,7 @@ class DatabaseApi {
 			makeClan(data);
 		}
 		// Load local clan data from the "extraclan" folder
-		Path localdb = Paths.get("extraclan");
+		/*Path localdb = Paths.get("extraclan");
 		if (Files.exists(localdb)) {
 			File folder = new File("extraclan");
 			File[] listOfFiles = folder.listFiles();
@@ -59,7 +59,7 @@ class DatabaseApi {
 					  makeClan(data);
 				}
 			}
-		}
+		}*/
 	}
 
 	private static void makeClan(JSONObject jsonObject) throws Exception {

@@ -22,9 +22,14 @@ public class ClanTagsApi {
 	public static String PREFIX = "/";
 	public static Minecraft MC;
 
+	private static boolean loaded = false;
+
 	public static void loadClans(Minecraft minecraft) {
-		MC = minecraft;
-		DatabaseApi.loadDatabase(minecraft);
+		if(!loaded) {
+			MC = minecraft;
+			DatabaseApi.loadDatabase(minecraft);
+			loaded = true;
+		}
 	}
 
 	public static Clan getClan(String nameOrAbbreviation) {
