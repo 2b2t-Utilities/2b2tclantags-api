@@ -1,7 +1,7 @@
 package me.tigermouthbear.clantags.api.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.api.ClanTagsApi;
+import me.tigermouthbear.clantags.api.ClanTags;
 import me.tigermouthbear.clantags.api.Utils;
 import me.tigermouthbear.clantags.api.data.Clan;
 import me.tigermouthbear.clantags.api.screen.ClanScreen;
@@ -55,8 +55,8 @@ public class InfoCommand implements ICommand {
 
 	public boolean execute(String[] args) {
 		if(args.length == 1) {
-			ClanTagsApi.MC.displayGuiScreen(null);
-			clanToOpen = ClanTagsApi.getClan(args[0]);
+			ClanTags.MC.displayGuiScreen(null);
+			clanToOpen = ClanTags.getClan(args[0]);
 			return true;
 		}
 		return false;
@@ -79,8 +79,8 @@ public class InfoCommand implements ICommand {
 
 	@SubscribeEvent
 	public void renderTickEvent(TickEvent.RenderTickEvent event) {
-		if(ClanTagsApi.MC.currentScreen == null && clanToOpen != null) {
-			ClanTagsApi.MC.displayGuiScreen(new ClanScreen(clanToOpen));
+		if(ClanTags.MC.currentScreen == null && clanToOpen != null) {
+			ClanTags.MC.displayGuiScreen(new ClanScreen(clanToOpen));
 			clanToOpen = null;
 		}
 	}

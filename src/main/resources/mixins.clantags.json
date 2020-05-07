@@ -1,9 +1,0 @@
-{
-  "required": true,
-  "compatibilityLevel": "JAVA_8",
-  "package": "me.tigermouthbear.clantags.impl.mixin",
-  "refmap": "mixins.clantags.refmap.json",
-  "mixins": [
-    "MixinGuiPlayerTabOverlay"
-  ]
-}

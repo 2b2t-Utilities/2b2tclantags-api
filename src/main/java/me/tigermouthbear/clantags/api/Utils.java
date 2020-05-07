@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public class Utils {
 	public static void printComponent(ITextComponent component) {
-		ClanTagsApi.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, component);
+		ClanTags.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, component);
 	}
 
 	public static void printMessage(String text) {
-		ClanTagsApi.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, new TextComponentString(text));
+		ClanTags.MC.ingameGUI.addChatMessage(ChatType.SYSTEM, new TextComponentString(text));
 	}
 
 	public static final Map<String, String> colors = new HashMap<String, String>() {{

@@ -5,113 +5,45 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-
-        maven {
-            name = "SpongePowered"
-            url = "http://repo.spongepowered.org/maven"
-        }
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
     }
 }
 apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 
-version = project.modVersion
-group = project.modGroup
-archivesBaseName = project.modBaseName
+version = 2.2
+group = "me.tigermouthbear.clantags.api"
+archivesBaseName = "2b2tclantags-api"
 
-sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
     sourceCompatibility = targetCompatibility = "1.8"
 }
 
 minecraft {
-    version = project.forgeVersion
+    version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    mappings = project.mcpVersion
+    mappings = "snapshot_20171003"
     coreMod = 'me.tigermouthbear.clantags.impl.mixin.MixinLoader'
     makeObfSourceJar = false
 }
 
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = "1.12.2-14.23.5.2768"
+    runDir = "run"
+
+    mappings = "snapshot_20171003"
+    makeObfSourceJar = false
+}
+
 repositories {
-    maven {
-        name = "spongepowered-repo"
-        url = "http://repo.spongepowered.org/maven/"
-    }
-    maven {
-        name = "jitpack.io"
-        url = "https://jitpack.io"
-    }
+    mavenCentral()
 }
 
 dependencies {
-    compile("org.spongepowered:mixin:0.7.8-SNAPSHOT") {
-        exclude module: 'launchwrapper'
-        exclude module: 'guava'
-        exclude module: 'gson'
-        exclude module: 'commons-io'
-    }
-
     compile "org.json:json:20190722"
 }
-
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-
-        // replace version and mcversion
-        expand "version":project.version, "mcversion":project.minecraft.version
-    }
-
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
-    }
-}
-
-mixin {
-    defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.clantags.refmap.json'
-}
-
-shadowJar {
-    dependencies {
-        include(dependency('org.spongepowered:mixin'))
-        include(dependency('org.json:json'))
-    }
-    exclude 'dummyThing'
-    exclude 'LICENSE.txt'
-    classifier = 'release'
-}
-
-reobf {
-    shadowJar {
-        mappingType = 'SEARGE'
-        classpath = sourceSets.main.compileClasspath
-    }
-}
-
-jar {
-    manifest {
-        attributes(
-                'MixinConfigs': 'mixins.clantags.json',
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                'TweakOrder': 0,
-                'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'me.tigermouthbear.clantags.mixin.MixinLoader',
-                'ForceLoadAsMod': 'true'
-        )
-    }
-}
-
-build.dependsOn(shadowJar)

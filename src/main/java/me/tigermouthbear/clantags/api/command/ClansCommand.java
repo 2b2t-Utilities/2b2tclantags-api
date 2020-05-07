@@ -1,7 +1,7 @@
 package me.tigermouthbear.clantags.api.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.api.ClanTagsApi;
+import me.tigermouthbear.clantags.api.ClanTags;
 import me.tigermouthbear.clantags.api.Utils;
 import me.tigermouthbear.clantags.api.data.ClanMember;
 import net.minecraft.command.ICommand;
@@ -54,14 +54,14 @@ public class ClansCommand implements ICommand {
 
 	public boolean executeClanCommand(String[] args) {
 		if(args.length == 1) {
-			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(args[0]);
+			ClanMember clanMember = ClanTags.getClanMemberByUsername(args[0]);
 			if(clanMember == null) return false;
 			TextComponentString prefix = new TextComponentString(args[0] + "'s clans: ");
 			Utils.printComponent(prefix.appendSibling(clanMember.getInteractiveClanTags()));
 			return true;
 		} else if(args.length == 0) {
 			TextComponentString prefix = new TextComponentString("All clans: ");
-			Utils.printComponent(prefix.appendSibling(ClanTagsApi.getAllInteractiveClanTags()));
+			Utils.printComponent(prefix.appendSibling(ClanTags.getAllInteractiveClanTags()));
 			return true;
 		} else {
 			return false;
@@ -76,7 +76,7 @@ public class ClansCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos) {
 		List<String> list = new ArrayList<>();
-		for(EntityPlayer entityPlayer: ClanTagsApi.MC.world.playerEntities.stream().filter(entityPlayer -> entityPlayer != ClanTagsApi.MC.player).sorted(distanceComparator).collect(Collectors.toList()))
+		for(EntityPlayer entityPlayer: ClanTags.MC.world.playerEntities.stream().filter(entityPlayer -> entityPlayer != ClanTags.MC.player).sorted(distanceComparator).collect(Collectors.toList()))
 			list.add(entityPlayer.getName());
 		return list;
 	}
@@ -89,6 +89,6 @@ public class ClansCommand implements ICommand {
 
 class DistanceComparator implements Comparator<EntityPlayer> {
 	public int compare(EntityPlayer e1, EntityPlayer e2) {
-		return Float.compare(e1.getDistance(ClanTagsApi.MC.player), e2.getDistance(ClanTagsApi.MC.player));
+		return Float.compare(e1.getDistance(ClanTags.MC.player), e2.getDistance(ClanTags.MC.player));
 	}
 }

@@ -1,6 +1,6 @@
 package me.tigermouthbear.clantags.api.data;
 
-import me.tigermouthbear.clantags.api.ClanTagsApi;
+import me.tigermouthbear.clantags.api.ClanTags;
 import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class Clan {
 	}
 
 	public ITextComponent getInteractiveTag() {
-		return ITextComponent.Serializer.jsonToComponent("{\"text\":\"[" + getAbbreviation() + "] \",\"color\":\"" + getColor() + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + ClanTagsApi.PREFIX + "info " + getAbbreviation() + "\"}}");
+		return ITextComponent.Serializer.jsonToComponent("{\"text\":\"[" + getAbbreviation() + "] \",\"color\":\"" + getColor() + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + ClanTags.PREFIX + "info " + getAbbreviation() + "\"}}");
 	}
 
 	public static ArrayList<Clan> getAllClans() {

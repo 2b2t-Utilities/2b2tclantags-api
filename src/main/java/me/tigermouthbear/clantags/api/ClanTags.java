@@ -17,17 +17,19 @@ import java.util.ArrayList;
  * @author Tigermouthbear
  * @since 3/12/19
  */
-public class ClanTagsApi {
+public class ClanTags {
+	public static final ClansCommand CLANS_COMMAND = new ClansCommand();
+	public static final InfoCommand INFO_COMMAND = new InfoCommand();
+	public static final Minecraft MC = Minecraft.getMinecraft();
+
 	//prefix for info command
 	public static String PREFIX = "/";
-	public static Minecraft MC;
 
 	private static boolean loaded = false;
 
-	public static void loadClans(Minecraft minecraft) {
+	public static void load() {
 		if(!loaded) {
-			MC = minecraft;
-			DatabaseApi.loadDatabase(minecraft);
+			ClanDatabase.loadDatabase();
 			loaded = true;
 		}
 	}
@@ -70,7 +72,7 @@ public class ClanTagsApi {
 
 	public static String handlePlayerTab(NetworkPlayerInfo networkPlayerInfoIn) {
 		String originalName = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText(): ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
-		ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(networkPlayerInfoIn.getGameProfile().getName());
+		ClanMember clanMember = ClanTags.getClanMemberByUsername(networkPlayerInfoIn.getGameProfile().getName());
 		if(clanMember != null) return clanMember.getInteractiveClanTags().getFormattedText() + originalName;
 		return originalName;
 	}
@@ -80,13 +82,13 @@ public class ClanTagsApi {
 
 		if(message.startsWith("<")) {
 			String username = message.split("<")[1].split(">")[0];
-			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+			ClanMember clanMember = ClanTags.getClanMemberByUsername(username);
 
 			if(clanMember != null)
 				event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
 		} else if(message.contains(" whispers: ")) {
 			String username = message.split(" ")[0];
-			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+			ClanMember clanMember = ClanTags.getClanMemberByUsername(username);
 
 			if(clanMember != null)
 				event.setMessage(clanMember.getInteractiveClanTags().appendSibling(event.getMessage()));
@@ -94,17 +96,12 @@ public class ClanTagsApi {
 			String beginning = message.substring(0, message.indexOf(":"));
 			String[] arr = beginning.split(" ");
 			String username = arr[arr.length - 1];
-			ClanMember clanMember = ClanTagsApi.getClanMemberByUsername(username);
+			ClanMember clanMember = ClanTags.getClanMemberByUsername(username);
 
 			TextComponentString first = new TextComponentString("to ");
 
 			if(clanMember != null)
 				event.setMessage(first.appendSibling(clanMember.getInteractiveClanTags()).appendText(username).appendText(message.substring(message.indexOf(":"))));
 		}
-	}
-
-	public static class Command {
-		public static final ClansCommand CLANS_COMMAND = new ClansCommand();
-		public static final InfoCommand INFO_COMMAND = new InfoCommand();
 	}
 }

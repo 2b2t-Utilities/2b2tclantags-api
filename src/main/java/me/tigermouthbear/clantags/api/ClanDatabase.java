@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * @author Tigermouthbear
  * @since 3/12/20
  */
-class DatabaseApi {
+class ClanDatabase {
 	private static final String CLAN_DATABASE = "https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases.txt";
 
-	public static void loadDatabase(Minecraft mc) {
+	public static void loadDatabase() {
 		try {
 			loadDatabase(CLAN_DATABASE);
 		} catch(Exception e) {
