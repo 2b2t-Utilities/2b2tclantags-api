@@ -1,9 +1,9 @@
-package me.tigermouthbear.clantags.api;
+package dev.tigr.clantags.api;
 
-import me.tigermouthbear.clantags.api.command.ClansCommand;
-import me.tigermouthbear.clantags.api.command.InfoCommand;
-import me.tigermouthbear.clantags.api.data.Clan;
-import me.tigermouthbear.clantags.api.data.ClanMember;
+import dev.tigr.clantags.api.command.ClansCommand;
+import dev.tigr.clantags.api.command.InfoCommand;
+import dev.tigr.clantags.api.data.Clan;
+import dev.tigr.clantags.api.data.ClanMember;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScorePlayerTeam;

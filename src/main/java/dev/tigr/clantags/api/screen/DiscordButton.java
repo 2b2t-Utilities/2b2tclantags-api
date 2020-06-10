@@ -1,11 +1,10 @@
-package me.tigermouthbear.clantags.api.screen;
+package dev.tigr.clantags.api.screen;
 
-import me.tigermouthbear.clantags.api.Utils;
+import dev.tigr.clantags.api.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Tigermouthbear

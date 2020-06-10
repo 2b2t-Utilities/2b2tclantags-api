@@ -1,10 +1,10 @@
-package me.tigermouthbear.clantags.api.command;
+package dev.tigr.clantags.api.command;
 
 import com.google.common.collect.Lists;
-import me.tigermouthbear.clantags.api.ClanTags;
-import me.tigermouthbear.clantags.api.Utils;
-import me.tigermouthbear.clantags.api.data.Clan;
-import me.tigermouthbear.clantags.api.screen.ClanScreen;
+import dev.tigr.clantags.api.Utils;
+import dev.tigr.clantags.api.data.Clan;
+import dev.tigr.clantags.api.screen.ClanScreen;
+import dev.tigr.clantags.api.ClanTags;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;

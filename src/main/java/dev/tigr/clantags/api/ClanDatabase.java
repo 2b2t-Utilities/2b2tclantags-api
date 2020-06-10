@@ -1,20 +1,15 @@
-package me.tigermouthbear.clantags.api;
+package dev.tigr.clantags.api;
 
-import me.tigermouthbear.clantags.api.data.Clan;
-import me.tigermouthbear.clantags.api.data.ClanMember;
-import net.minecraft.client.Minecraft;
+import dev.tigr.clantags.api.data.Clan;
+import dev.tigr.clantags.api.data.ClanMember;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**

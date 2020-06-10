@@ -1,6 +1,6 @@
-package me.tigermouthbear.clantags.api.data;
+package dev.tigr.clantags.api.data;
 
-import me.tigermouthbear.clantags.api.ClanTags;
+import dev.tigr.clantags.api.ClanTags;
 import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;

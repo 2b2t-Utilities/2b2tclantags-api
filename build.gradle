@@ -13,7 +13,7 @@ buildscript {
 apply plugin: "net.minecraftforge.gradle.forge"
 
 version = 2.2
-group = "me.tigermouthbear.clantags.api"
+group = "dev.tigr.clantags.api"
 archivesBaseName = "2b2tclantags-api"
 
 compileJava {
@@ -24,7 +24,7 @@ minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
     mappings = "snapshot_20171003"
-    coreMod = 'me.tigermouthbear.clantags.impl.mixin.MixinLoader'
+    coreMod = 'dev.tigr.clantags.impl.mixin.MixinLoader'
     makeObfSourceJar = false
 }
 
