@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @since 3/12/20
  */
 class ClanDatabase {
-	private static final String CLAN_DATABASE = "https://raw.githubusercontent.com/Tigermouthbear/2b2tclantags/master/clan-database/databases.txt";
+	private static final String CLAN_DATABASE = "https://raw.githubusercontent.com/2b2t-Utilities/2b2tclantags-api/master/clan-database/databases.txt";
 
 	public static void loadDatabase() {
 		try {
